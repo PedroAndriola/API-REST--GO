@@ -1,95 +1,65 @@
+# API de Pizzaria
 
-# Pizzaria API
+Este projeto demonstra uma API REST escrita em Go utilizando o framework [Gin](https://github.com/gin-gonic/gin). Ela permite cadastrar e consultar pizzas armazenadas em um arquivo JSON.
 
-Esta é uma API simples para gerenciar um catálogo de pizzas usando o framework Gin em Go.
+## Requisitos
+
+- Go 1.20 ou superior instalado.
+
+## Como executar
+
+1. Clone este repositório e acesse a pasta do projeto.
+2. Execute `go run main.go` para iniciar o servidor.
+3. A API ficará disponível em `http://localhost:8080`.
 
 ## Endpoints
 
-### GET /pizzas
+### `GET /pizzas`
+Retorna a lista de pizzas cadastradas.
 
-Retorna a lista de todas as pizzas.
-
-**Resposta de Sucesso:**
-
-- **Código:** 200
-- **Conteúdo:**
-  ```json
-  {
-    "pizzas": [
-      {
-        "ID": 1,
-        "Name": "Margherita",
-        "Ingredients": ["Tomato", "Mozzarella", "Basil"]
-      },
-      ...
-    ]
-  }
-	GET /pizzas/:id
-Retorna uma pizza específica pelo ID.
-
-Parâmetros:
-
-id: ID da pizza
-Resposta de Sucesso:
-
-Código: 200
-Conteúdo:
+Exemplo de resposta:
+```json
 {
-  "ID": 1,
-  "Name": "Margherita",
-  "Ingredients": ["Tomato", "Mozzarella", "Basil"]
+  "pizzas": [
+    {
+      "id": 1,
+      "nome": "Calabresa",
+      "preco": 45.5
+    }
+  ]
 }
-  Resposta de Erro:
+```
 
-Código: 404
-Conteúdo:
+### `GET /pizzas/:id`
+Busca uma pizza pelo `id` informado na rota.
+
+- **Sucesso:** código `200` e dados da pizza.
+- **Falha:** código `404` quando o `id` não for encontrado.
+
+### `POST /pizzas`
+Adiciona uma nova pizza ao catálogo. O corpo da requisição deve conter o seguinte formato:
+```json
 {
-  "message": "Pizza not found"
+  "nome": "Quatro Queijos",
+  "preco": 50.0
 }
-  POST /pizzas
-Adiciona uma nova pizza ao catálogo.
+```
 
-Corpo da Requisição:
+Se bem-sucedido retorna código `201` e a pizza criada.
 
-{
-  "Name": "Pepperoni",
-  "Ingredients": ["Tomato", "Mozzarella", "Pepperoni"]
-}
-  Resposta de Sucesso:
-
-Código: 201
-Conteúdo:
-{
-  "ID": 2,
-  "Name": "Pepperoni",
-  "Ingredients": ["Tomato", "Mozzarella", "Pepperoni"]
-}
-  Resposta de Erro:
-
-Código: 400
-Conteúdo:
-{
-  "error": "Invalid request payload"
-}
-  Estrutura do Projeto
-  Pizzaria/
-├── data/
+## Estrutura do projeto
+```
+API-REST--GO/
+├── data/            # Arquivo JSON onde as pizzas são salvas
 │   └── pizza.json
-├── main.go
-└── models/
-    └── pizza.go
+├── models/          # Definição dos modelos utilizados
+│   └── pizzaria.go
+├── main.go          # Código principal da aplicação
+└── go.mod           # Dependências do projeto
+```
 
-	Como Executar
-Certifique-se de ter o Go instalado em sua máquina.
-Clone este repositório.
-Navegue até o diretório do projeto.
-Execute o comando go run main.go.
-A API estará disponível em http://localhost:8080.
-Dependências
-Gin: Framework web para Go.
-Autor
+## Autor
 Pedro Andriola
 
-Licença
-Este projeto está licenciado sob a Licença MIT - veja o arquivo LICENSE para mais detalhes.
-
+## Licença
+Distribuído sob a licença MIT. Consulte o arquivo `LICENSE` para mais informações.
